@@ -2,6 +2,9 @@ const keyboard = document.getElementById('qwerty');
 const phraseDisplay = document.getElementById('phrase');
 const resetButton = document.getElementsByClassName('btn__reset')[0];
 const overlay = document.getElementById('overlay');
+const allLetters = document.getElementsByClassName('letter');
+const allShownLetters = document.getElementsByClassName('show');
+
 let numberMissed = 0;
 
 const phrases = [
@@ -29,7 +32,7 @@ const addPhraseToDisplay = () => {
         listItemString += `<li class="${letter == " " ? "space" : "letter"}">${letter}</li>`;
     }
     phraseDisplay.innerHTML = listItemString;
-}
+};
 
 const checkLetter = (buttonPressed) => {
     const displayedPhrase = document.querySelectorAll('.letter');
@@ -41,16 +44,43 @@ const checkLetter = (buttonPressed) => {
         }
     }
     return match;
+};
+
+const checkForWin = () => {
+    if(allLetters.length == allShownLetters.length) {
+        endGame("win");
+    }
+};
+
+const checkForLose = () => {
+    numberMissed += 1;
+    removeHeart();
+    if(numberMissed > 4) {
+        endGame("lose");
+    }
+};
+
+const removeHeart = () => {
+    const hearts = document.querySelectorAll(".tries img");
+    hearts[5 - numberMissed].setAttribute("src", "images/lostHeart.png");
+};
+
+const endGame = (endType) => {
+    resetButton.style.display = "none";
+    let message = "";
+    message = endType == "win" ? "Congratulations!" : "Sorry! Try again";
+    overlay.style.display = "flex";
+    overlay.classList.add(endType);
+    overlay.getElementsByClassName("title")[0].innerText = message;
 }
 
 keyboard.addEventListener("click", e => {
     if(e.target.tagName  === "BUTTON") {
+        e.target.setAttribute("disabled", "true");
         e.target.classList.add("chosen");
-        e.target.disable;
-        checkLetter(e.target.innerText);
+        checkLetter(e.target.innerText) ? checkForWin() : checkForLose();
     }
 });
 
 
 addPhraseToDisplay();
-checkLetter("o");
