@@ -18,5 +18,17 @@ resetButton.addEventListener("click", e => {
 });
 
 const getRandomPhraseAsArray = (phraseList) => {
-    return phraseList[Math.floor(Math.random() * phraseList.length)].split("");
+    return phraseList[Math.floor(Math.random() * phraseList.length)].toLowerCase().split("");
 };
+
+const addPhraseToDisplay = () => {
+    let listItemString = "";
+    const phraseToAdd = getRandomPhraseAsArray(phrases);
+
+    for(let letter of phraseToAdd) {
+        listItemString += `<li class="${letter == " " ? "space" : "letter"}">${letter}</li>`;
+    }
+    phraseDisplay.innerHTML = listItemString;
+}
+
+addPhraseToDisplay();
