@@ -31,7 +31,7 @@ const addPhraseToDisplay = () => {
     for(let letter of phraseToAdd) {
         listItemString += `<li class="${letter == " " ? "space" : "letter"}">${letter}</li>`;
     }
-    phraseDisplay.innerHTML = listItemString;
+    phraseDisplay.getElementsByTagName('ul')[0].innerHTML = listItemString;
 };
 
 const checkLetter = (buttonPressed) => {
