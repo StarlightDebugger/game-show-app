@@ -1,6 +1,7 @@
 const keyboard = document.getElementById('qwerty');
 const phraseDisplay = document.getElementById('phrase');
-const resetButton = document.getElementById('btn__reset');
+const resetButton = document.getElementsByClassName('btn__reset')[0];
+const overlay = document.getElementById('overlay');
 let numberMissed = 0;
 
 const phrases = [
@@ -11,3 +12,7 @@ const phrases = [
     "time waits for no one"
 ];
 
+
+resetButton.addEventListener("click", e => {
+    overlay.style.display = "none";
+});
