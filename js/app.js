@@ -16,3 +16,7 @@ const phrases = [
 resetButton.addEventListener("click", e => {
     overlay.style.display = "none";
 });
+
+const getRandomPhraseAsArray = (phraseList) => {
+    return phraseList[Math.floor(Math.random() * phraseList.length)].split("");
+};
