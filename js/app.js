@@ -31,4 +31,26 @@ const addPhraseToDisplay = () => {
     phraseDisplay.innerHTML = listItemString;
 }
 
+const checkLetter = (buttonPressed) => {
+    const displayedPhrase = document.querySelectorAll('.letter');
+    let match = false;
+    for(let letter of displayedPhrase) {
+        if(letter.innerText === buttonPressed) {
+            letter.classList.add("show");
+            match = true;
+        }
+    }
+    return match;
+}
+
+keyboard.addEventListener("click", e => {
+    if(e.target.tagName  === "BUTTON") {
+        e.target.classList.add("chosen");
+        e.target.disable;
+        checkLetter(e.target.innerText);
+    }
+});
+
+
 addPhraseToDisplay();
+checkLetter("o");
