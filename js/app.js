@@ -1,28 +1,54 @@
-const keyboard = document.getElementById('qwerty');
-const keys = keyboard.getElementsByTagName("button");
-const phraseDisplay = document.getElementById('phrase');
-const phraseDisplayList = phraseDisplay.getElementsByTagName('ul')[0];
-const resetButton = document.getElementsByClassName('btn__reset')[0];
-const overlay = document.getElementById('overlay');
-const allLetters = document.getElementsByClassName('letter');
-const allShownLetters = document.getElementsByClassName('show');
-const hearts = document.querySelectorAll(".tries img");
-
-let numberMissed = 0;
-
+/**
+ * Initializes the application by loading data after the DOM has fully loaded.
+ * This ensures that all DOM elements are available and prevents errors in accessing 
+ * elements that might not yet be loaded if the script runs too early. Data is loaded 
+ * from 'data.js' into the global namespace to keep the application organized.
+ */
 document.addEventListener("DOMContentLoaded", function() {
+    // Data initializations
     const phrases = window.gameData.phrases;
     const sounds = window.gameData.sounds;
+
+    // DOM definitions
+    const keyboard = document.getElementById('qwerty');
+    const keys = keyboard.getElementsByTagName("button");
+    const phraseDisplay = document.getElementById('phrase');
+    const phraseDisplayList = phraseDisplay.getElementsByTagName('ul')[0];
+    const resetButton = document.getElementsByClassName('btn__reset')[0];
+    const overlay = document.getElementById('overlay');
+    const allLetters = document.getElementsByClassName('letter');
+    const allShownLetters = document.getElementsByClassName('show');
+    const hearts = document.querySelectorAll(".tries img");
+    
+    // The number of incorrect guesses initialization
+    let numberMissed = 0;
+    
+    // Sound initializations
+    const correctSound = new Audio(sounds.correct.path);
+    const incorrectSound = new Audio(sounds.incorrect.path);
+    const gameWinSound = new Audio(sounds.win.path);
+    const gameLoseSound = new Audio(sounds.lose.path);
+
+    // Event Listeners
+    keyboard.addEventListener("click", e => {
+        if(e.target.tagName  === "BUTTON") {
+            e.target.setAttribute("disabled", "");
+            e.target.classList.add("chosen");
+            checkLetter(e.target.innerText) ? checkForWin() : checkForLose();
+        }
+    });
+
+    resetButton.addEventListener("click", e => {
+        overlay.style.display = "none";
+        resetOverlayClasses();
+        resetMissed();
+        resetKeyboard();
+        resetHearts();
+        addPhraseToDisplay();
+    });
+    
+    // Further initialization code can go here
 });
-
-const correctSound = new Audio(sounds.correct.path);
-const incorrectSound = new Audio(sounds.incorrect.path);
-const gameWinSound = new Audio(sounds.win.path);
-const gameLoseSound = new Audio(sounds.lose.path);
-
-
-
-
 
 Array.prototype.getRandomElement = function() {
     return this[~~(Math.random() * this.length)];
@@ -101,14 +127,6 @@ const removePhrase = () => {
     phraseDisplayList.innerHTML = "";
 }
 
-keyboard.addEventListener("click", e => {
-    if(e.target.tagName  === "BUTTON") {
-        e.target.setAttribute("disabled", "");
-        e.target.classList.add("chosen");
-        checkLetter(e.target.innerText) ? checkForWin() : checkForLose();
-    }
-});
-
 const resetKeyboard = () => {
     for(let key of keys) {
         key.removeAttribute("disabled");
@@ -127,12 +145,3 @@ const resetHearts = () => {
 const resetOverlayClasses = () => {
     overlay.classList = "start";
 };
-
-resetButton.addEventListener("click", e => {
-    overlay.style.display = "none";
-    resetOverlayClasses();
-    resetMissed();
-    resetKeyboard();
-    resetHearts();
-    addPhraseToDisplay();
-});
