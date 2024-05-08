@@ -36,9 +36,8 @@ const addPhraseToDisplay = () => {
 };
 
 const checkLetter = (buttonPressed) => {
-    const displayedPhrase = document.querySelectorAll('.letter');
     let match = false;
-    for(let letter of displayedPhrase) {
+    for(let letter of allLetters) {
         if(letter.innerText === buttonPressed) {
             letter.classList.add("show", "animate__animated", "animate__fadeIn");
             match = true;
