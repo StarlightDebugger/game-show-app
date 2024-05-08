@@ -93,6 +93,11 @@ button {
   width: 15px;
 }
 
+.break {
+  width: 100%;
+  height: 5px;
+}
+
 .show {
   color: #000;
   background-color: #76CE82;

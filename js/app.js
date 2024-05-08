@@ -18,18 +18,37 @@ const phrases = [
     "time waits for no one"
 ];
 
-const getRandomPhraseAsArray = (phraseList) => {
-    return phraseList[Math.floor(Math.random() * phraseList.length)].toLowerCase().split("");
-};
+Array.prototype.getRandomElement = function() {
+    return this[~~(Math.random() * this.length)];
+}
 
 const addPhraseToDisplay = () => {
-    let listItemString = "";
-    const phraseToAdd = getRandomPhraseAsArray(phrases);
+    const phrase = phrases.getRandomElement();
+    const words = phrase.split(" ");
+    let currentLineLength = 0;
+    let maxCharsPerLine = 14;  // Max number of reasonable letters for 1024px
+    let html = "";
 
-    for(let letter of phraseToAdd) {
-        listItemString += `<li class="${letter == " " ? "space" : "letter"}">${letter}</li>`;
-    }
-    phraseDisplayList.innerHTML = listItemString;
+    words.forEach((word, index) => {
+        // Check if adding this word plus a space exceeds line length
+        if (currentLineLength + word.length + 1 > maxCharsPerLine && currentLineLength > 0) {
+            html += `<li class="break"></li>`;  // Insert a break if line is too long
+            currentLineLength = 0;  // Reset the line length
+        }
+
+        // Add each letter of the word into <li> elements
+        word.split('').forEach(letter => {
+            html += `<li class="letter">${letter}</li>`;
+        });
+
+        // Add a space unless it's the last word
+        if (index < words.length - 1) {
+            html += `<li class="space"> </li>`;
+        }
+        currentLineLength += word.length + 1;  // Include space in count
+    });
+
+    phraseDisplayList.innerHTML = html;
 };
 
 const checkLetter = (buttonPressed) => {
@@ -111,3 +130,4 @@ resetButton.addEventListener("click", e => {
     addPhraseToDisplay();
 });
 
+console.log(phrases.getRandomElement());
