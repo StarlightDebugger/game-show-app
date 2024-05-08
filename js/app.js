@@ -8,6 +8,56 @@ const allLetters = document.getElementsByClassName('letter');
 const allShownLetters = document.getElementsByClassName('show');
 const hearts = document.querySelectorAll(".tries img");
 
+const sounds = {
+    "correct": {
+        "path": "sounds/correct.wav",
+        "attribution": {
+                        "sound_url": "https://freesound.org/people/GabFitzgerald/sounds/625174/", 
+                        "sound_name": "[UI Sound] Approval - High Pitched Bell Synth", 
+                        "author_url": "https://freesound.org/people/GabFitzgerald/", 
+                        "author_name": "GabFitzgerald",
+                        "license_url": "http://creativecommons.org/publicdomain/zero/1.0/", 
+                        "license_name": "Creative Commons 0"
+                    }
+    },
+    "incorrect": {
+        "path": "sounds/incorrect.mp3",
+        "attribution": {
+            "sound_url": "https://freesound.org/people/UNIVERSFIELD/sounds/734446/", 
+            "sound_name": "Error #10", 
+            "author_url": "https://freesound.org/people/UNIVERSFIELD/", 
+            "author_name": "UNIVERSFIELD", "license_url": "https://creativecommons.org/licenses/by/4.0/", 
+            "license_name": "Attribution 4.0"
+        }
+    },
+    "game-lose": {
+        "path": "sounds/game-lose.wav",
+        "attribution": {
+            "sound_url": "https://freesound.org/people/themusicalnomad/sounds/253886/", 
+            "sound_name": "negative_beeps.wav", 
+            "author_url": "https://freesound.org/people/themusicalnomad/", 
+            "author_name": "themusicalnomad", 
+            "license_url": "http://creativecommons.org/publicdomain/zero/1.0/", 
+            "license_name": "Creative Commons 0"
+        }
+    },
+    "game-win": {
+        "path": "sounds/game-win.wav",
+        "attribution": {
+            "sound_url": "https://freesound.org/people/LittleRobotSoundFactory/sounds/274182/", 
+            "sound_name": "Jingle_Win_Synth_05.wav", 
+            "author_url": "https://freesound.org/people/LittleRobotSoundFactory/", 
+            "author_name": "LittleRobotSoundFactory", 
+            "license_url": "https://creativecommons.org/licenses/by/4.0/", 
+            "license_name": "Attribution 4.0"
+        }
+    }
+};
+const correctSound = new Audio(sounds.correct.path);
+const incorrectSound = new Audio(sounds.incorrect.path);
+const gameWinSound = new Audio(sounds["game-win"].path);
+const gameLoseSound = new Audio(sounds["game-lose"].path);
+
 let numberMissed = 0;
 
 const phrases = [
@@ -59,6 +109,7 @@ const checkLetter = (buttonPressed) => {
             match = true;
         }
     }
+    match ? correctSound.play() : incorrectSound.play();
     return match;
 };
 
@@ -82,8 +133,9 @@ const removeHeart = () => {
 
 const endGame = (endType) => {
     removePhrase();
-    resetButton.innerText = "Play again";
+    endType == "win" ? gameWinSound.play() : gameLoseSound.play();
     let message = endType == "win" ? "Congratulations!" : "Sorry! Try again";
+    resetButton.innerText = "Play again";
     overlay.style.display = "flex";
     overlay.classList.add(endType);
     overlay.getElementsByClassName("title")[0].innerText = message;
@@ -102,7 +154,6 @@ keyboard.addEventListener("click", e => {
 });
 
 const resetKeyboard = () => {
-    console.log("Resetting keyboard...");
     for(let key of keys) {
         key.removeAttribute("disabled");
         key.classList = "";
@@ -129,5 +180,3 @@ resetButton.addEventListener("click", e => {
     resetHearts();
     addPhraseToDisplay();
 });
-
-console.log(phrases.getRandomElement());
