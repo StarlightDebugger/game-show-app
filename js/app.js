@@ -1,5 +1,6 @@
 const keyboard = document.getElementById('qwerty');
 const phraseDisplay = document.getElementById('phrase');
+const phraseDisplayList = phraseDisplay.getElementsByTagName('ul')[0];
 const resetButton = document.getElementsByClassName('btn__reset')[0];
 const overlay = document.getElementById('overlay');
 const allLetters = document.getElementsByClassName('letter');
@@ -31,7 +32,7 @@ const addPhraseToDisplay = () => {
     for(let letter of phraseToAdd) {
         listItemString += `<li class="${letter == " " ? "space" : "letter"}">${letter}</li>`;
     }
-    phraseDisplay.getElementsByTagName('ul')[0].innerHTML = listItemString;
+    phraseDisplayList.innerHTML = listItemString;
 };
 
 const checkLetter = (buttonPressed) => {
@@ -66,12 +67,16 @@ const removeHeart = () => {
 };
 
 const endGame = (endType) => {
+    removePhrase();
     resetButton.style.display = "none";
-    let message = "";
-    message = endType == "win" ? "Congratulations!" : "Sorry! Try again";
+    let message = endType == "win" ? "Congratulations!" : "Sorry! Try again";
     overlay.style.display = "flex";
     overlay.classList.add(endType);
     overlay.getElementsByClassName("title")[0].innerText = message;
+}
+
+const removePhrase = () => {
+    phraseDisplayList.innerHTML = "";
 }
 
 keyboard.addEventListener("click", e => {
