@@ -1,10 +1,12 @@
 const keyboard = document.getElementById('qwerty');
+const keys = keyboard.getElementsByTagName("button");
 const phraseDisplay = document.getElementById('phrase');
 const phraseDisplayList = phraseDisplay.getElementsByTagName('ul')[0];
 const resetButton = document.getElementsByClassName('btn__reset')[0];
 const overlay = document.getElementById('overlay');
 const allLetters = document.getElementsByClassName('letter');
 const allShownLetters = document.getElementsByClassName('show');
+const hearts = document.querySelectorAll(".tries img");
 
 let numberMissed = 0;
 
@@ -15,11 +17,6 @@ const phrases = [
     "tomorrow never knows",
     "time waits for no one"
 ];
-
-
-resetButton.addEventListener("click", e => {
-    overlay.style.display = "none";
-});
 
 const getRandomPhraseAsArray = (phraseList) => {
     return phraseList[Math.floor(Math.random() * phraseList.length)].toLowerCase().split("");
@@ -61,13 +58,12 @@ const checkForLose = () => {
 };
 
 const removeHeart = () => {
-    const hearts = document.querySelectorAll(".tries img");
-    hearts[5 - numberMissed].setAttribute("src", "images/lostHeart.png");
+    hearts[hearts.length - numberMissed].setAttribute("src", "images/lostHeart.png");
 };
 
 const endGame = (endType) => {
     removePhrase();
-    resetButton.style.display = "none";
+    resetButton.innerText = "Play again";
     let message = endType == "win" ? "Congratulations!" : "Sorry! Try again";
     overlay.style.display = "flex";
     overlay.classList.add(endType);
@@ -80,11 +76,38 @@ const removePhrase = () => {
 
 keyboard.addEventListener("click", e => {
     if(e.target.tagName  === "BUTTON") {
-        e.target.setAttribute("disabled", "true");
+        e.target.setAttribute("disabled", "");
         e.target.classList.add("chosen");
         checkLetter(e.target.innerText) ? checkForWin() : checkForLose();
     }
 });
 
+const resetKeyboard = () => {
+    console.log("Resetting keyboard...");
+    for(let key of keys) {
+        key.removeAttribute("disabled");
+        key.classList = "";
+    }
+};
 
-addPhraseToDisplay();
+const resetMissed = () => { numberMissed = 0; }
+
+const resetHearts = () => {
+    for(let heart of hearts) {
+        heart.setAttribute("src", "images/liveHeart.png");
+    }
+};
+
+const resetOverlayClasses = () => {
+    overlay.classList = "start";
+};
+
+resetButton.addEventListener("click", e => {
+    overlay.style.display = "none";
+    resetOverlayClasses();
+    resetMissed();
+    resetKeyboard();
+    resetHearts();
+    addPhraseToDisplay();
+});
+
