@@ -39,7 +39,7 @@ const checkLetter = (buttonPressed) => {
     let match = false;
     for(let letter of displayedPhrase) {
         if(letter.innerText === buttonPressed) {
-            letter.classList.add("show");
+            letter.classList.add("show", "animate__animated", "animate__fadeIn");
             match = true;
         }
     }
