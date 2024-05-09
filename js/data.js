@@ -3,7 +3,7 @@
    concerns and a method to keep app.js much cleaner. */
 
 // Phrase data
-const phrases = [
+const gamePhrases = [
     "mad as a hatter",
     "bad moon on the rise",
     "every cloud has a silver lining",
@@ -12,7 +12,7 @@ const phrases = [
 ];
 
 // Sound data including Creative Commons attributions
-const sounds = {
+const gameSounds = {
     correct: {
         path: "sounds/correct.wav",
         attribution: {
@@ -61,6 +61,6 @@ const sounds = {
 
 // Exporting data by attaching to the window object to avoid namespace clutter
 window.gameData = {
-    phrases: phrases,
-    sounds: sounds
+    phrases: gamePhrases,
+    sounds: gameSounds
 };
