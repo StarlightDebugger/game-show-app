@@ -1,29 +1,75 @@
-const keyboard = document.getElementById('qwerty');
-const keys = keyboard.getElementsByTagName("button");
-const phraseDisplay = document.getElementById('phrase');
-const phraseDisplayList = phraseDisplay.getElementsByTagName('ul')[0];
-const resetButton = document.getElementsByClassName('btn__reset')[0];
-const overlay = document.getElementById('overlay');
-const allLetters = document.getElementsByClassName('letter');
-const allShownLetters = document.getElementsByClassName('show');
-const hearts = document.querySelectorAll(".tries img");
+// Uninitialized global game data variables
+let phrases, sounds, correctSound, incorrectSound, gameWinSound, gameLoseSound;
 
-let numberMissed = 0;
+// Uninitialized global DOM Element variables
+let keyboard, keys, phraseDisplay, phraseDisplayList, resetButton, overlay, allLetters, allShownLetters, hearts;
 
-document.addEventListener("DOMContentLoaded", function() {
-    const phrases = window.gameData.phrases;
-    const sounds = window.gameData.sounds;
-});
+// Uninitialized Game Statistics variables
+let numberMissed;
 
-const correctSound = new Audio(sounds.correct.path);
-const incorrectSound = new Audio(sounds.incorrect.path);
-const gameWinSound = new Audio(sounds.win.path);
-const gameLoseSound = new Audio(sounds.lose.path);
+//===============================
+// Initialization functions
+//===============================
 
+const initializeGameData = () => {
+    phrases = window.gameData.phrases;
+    sounds = window.gameData.sounds;
+  
+    // Initialize variables for different sounds
+    correctSound = new Audio(sounds.correct.path);
+    incorrectSound = new Audio(sounds.incorrect.path);
+    gameWinSound = new Audio(sounds.win.path);
+    gameLoseSound = new Audio(sounds.lose.path);
+};
 
+const initializeGameStatistics = () => {
+    numberMissed = 0;
+};
 
+const initializeDOMVariables = () => {
+    keyboard = document.getElementById('qwerty');
+    keys = keyboard.getElementsByTagName("button");
+    phraseDisplay = document.getElementById('phrase');
+    phraseDisplayList = phraseDisplay.getElementsByTagName('ul')[0];
+    resetButton = document.getElementsByClassName('btn__reset')[0];
+    overlay = document.getElementById('overlay');
+    allLetters = document.getElementsByClassName('letter');
+    allShownLetters = document.getElementsByClassName('show');
+    hearts = document.querySelectorAll(".tries img");
+};
 
+const addEventListeners = (e) => {
+    keyboard.addEventListener("click", e => {
+        if(e.target.tagName  === "BUTTON") {
+            e.target.setAttribute("disabled", "");
+            e.target.classList.add("chosen");
+            checkLetter(e.target.innerText) ? checkForWin() : checkForLose();
+        }
+    });
 
+    resetButton.addEventListener("click", e => {
+        overlay.style.display = "none";
+        resetOverlayClasses();
+        resetMissed();
+        resetKeyboard();
+        resetHearts();
+        addPhraseToDisplay();
+    });
+}
+
+// =============================
+// Helper Function Definitions
+// =============================
+
+/**
+ * Because of frequent use a method was added directly onto the Array prototype
+ * for readability purposes. A bitwise ~~ was used for the slight performance increase
+ * over Math.floor(); This would not work if the value were a negative number or 
+ * a string, but since it's a positive integer or 0, this is preferable.
+ * https://stackoverflow.com/questions/13847053/difference-between-and-math-floor
+ * 
+ * @returns A random element from an array
+ */
 Array.prototype.getRandomElement = function() {
     return this[~~(Math.random() * this.length)];
 }
@@ -101,14 +147,6 @@ const removePhrase = () => {
     phraseDisplayList.innerHTML = "";
 }
 
-keyboard.addEventListener("click", e => {
-    if(e.target.tagName  === "BUTTON") {
-        e.target.setAttribute("disabled", "");
-        e.target.classList.add("chosen");
-        checkLetter(e.target.innerText) ? checkForWin() : checkForLose();
-    }
-});
-
 const resetKeyboard = () => {
     for(let key of keys) {
         key.removeAttribute("disabled");
@@ -128,11 +166,12 @@ const resetOverlayClasses = () => {
     overlay.classList = "start";
 };
 
-resetButton.addEventListener("click", e => {
-    overlay.style.display = "none";
-    resetOverlayClasses();
-    resetMissed();
-    resetKeyboard();
-    resetHearts();
-    addPhraseToDisplay();
+// ============================================================================
+// Entry point to start the application and initialize data and variables
+// ============================================================================
+document.addEventListener("DOMContentLoaded", function() {
+    initializeGameData();
+    initializeGameStatistics();
+    initializeDOMVariables();
+    addEventListeners();
 });
