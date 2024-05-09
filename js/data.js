@@ -11,6 +11,36 @@ const gamePhrases = [
     "time waits for no one"
 ];
 
+const gameMoods = {
+    happy: {
+        messages: [
+           "outstanding victory!",
+           "brilliant success!",
+           "exceptional skill!",
+           "you conquered!",
+           "incredible win!",
+           "magnificent play!",
+           "supberb mastery!",
+           "heroic achievement!",
+           "unbelievable performance!",
+           "supreme victory!" 
+        ]
+    },
+    sad: {
+        messages: [
+            "tough luck!",
+            "so close!",
+            "give it another shot!",
+            "almost had it!",
+            "nice try!",
+            "keep pushing!",
+            "you'll get it!",
+            "not quite there!",
+            "keep practicing!"
+        ]
+    }
+};
+
 // Sound data including Creative Commons attributions
 const gameSounds = {
     correct: {
@@ -62,5 +92,6 @@ const gameSounds = {
 // Exporting data by attaching to the window object to avoid namespace clutter
 window.gameData = {
     phrases: gamePhrases,
-    sounds: gameSounds
+    sounds: gameSounds,
+    moods: gameMoods
 };

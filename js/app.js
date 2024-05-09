@@ -1,5 +1,5 @@
 // Uninitialized global game data variables
-let phrases, sounds, correctSound, incorrectSound, gameWinSound, gameLoseSound;
+let phrases, sounds, moods, happy, sad, correctSound, incorrectSound, gameWinSound, gameLoseSound;
 
 // Uninitialized global DOM Element variables
 let keyboard, keys, phraseDisplay, phraseDisplayList, resetButton, overlay, allLetters, allShownLetters, hearts;
@@ -19,6 +19,9 @@ let numberMissed;
 const initializeGameData = () => {
     phrases = window.gameData.phrases;
     sounds = window.gameData.sounds;
+    moods = window.gameData.moods;
+    happy = moods.happy;
+    sad = moods.sad;
   
     // Initialize variables for different sounds
     correctSound = new Audio(sounds.correct.path);
@@ -209,7 +212,7 @@ const removeHeart = () => {
 const endGame = (endType) => {
     removePhrase();
     endType == "win" ? gameWinSound.play() : gameLoseSound.play();
-    let message = endType == "win" ? "Congratulations!" : "Sorry! Try again";
+    let message = endType == "win" ? happy.messages.getRandomElement() : sad.messages.getRandomElement();
     resetButton.innerText = "Play again";
     overlay.style.display = "flex";
     overlay.classList.add(endType);
