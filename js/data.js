@@ -24,6 +24,18 @@ const gameMoods = {
            "heroic achievement!",
            "unbelievable performance!",
            "supreme victory!" 
+        ],
+        emojis: [
+            "😊", // Smiling face
+            "🥳", // Party face
+            "😂", // Face with tears of joy
+            "🧠", // Brain
+            "⭐", // Star
+            "👍🏽", // Thumbs up (medium skin tone)
+            "👏🏿", // Clapping hands (dark skin tone)
+            "💃🏼", // Woman dancing (medium-light skin tone)
+            "🕺🏾", // Man dancing (medium-dark skin tone)
+            "🍾"  // Bottle with popping cork
         ]
     },
     sad: {
@@ -37,6 +49,18 @@ const gameMoods = {
             "you'll get it!",
             "not quite there!",
             "keep practicing!"
+        ],
+        emojis: [
+            "😢", // Crying face
+            "😔", // Pensive face
+            "🙁", // Slightly frowning face
+            "😞", // Disappointed face
+            "😓", // Downcast face with sweat
+            "👎🏼", // Thumbs down (medium-light skin tone)
+            "💔", // Broken heart
+            "😿", // Crying cat
+            "🥀", // Wilted flower
+            "🌧️"  // Cloud with rain
         ]
     }
 };

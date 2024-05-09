@@ -212,7 +212,9 @@ const removeHeart = () => {
 const endGame = (endType) => {
     removePhrase();
     endType == "win" ? gameWinSound.play() : gameLoseSound.play();
-    let message = endType == "win" ? happy.messages.getRandomElement() : sad.messages.getRandomElement();
+    let message = endType == "win" ? 
+        `${happy.messages.getRandomElement()} ${happy.emojis.getRandomElement()}` : 
+        `${sad.messages.getRandomElement()} ${sad.emojis.getRandomElement()}`;
     resetButton.innerText = "Play again";
     overlay.style.display = "flex";
     overlay.classList.add(endType);
