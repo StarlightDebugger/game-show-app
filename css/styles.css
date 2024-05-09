@@ -167,3 +167,9 @@ button {
 .lose a {
   color: var(--color-lose);
 }
+
+/* Custom CSS */
+#overlay-message {
+  font-size: 2em;
+  text-transform: capitalize;
+}
