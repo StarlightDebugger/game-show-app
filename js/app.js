@@ -5,7 +5,7 @@ let phrases, sounds, moods, happy, sad, correctSound, incorrectSound, gameWinSou
 let keyboard, keys, phraseDisplay, phraseDisplayList, resetButton, overlay, allLetters, allShownLetters, hearts;
 
 // Uninitialized Game Statistics variables
-let numberMissed;
+let numberMissed, phrase;
 
 //===============================
 // Initialization functions
@@ -57,6 +57,12 @@ const initializeDOMVariables = () => {
     allShownLetters = document.getElementsByClassName('show');
     hearts = document.querySelectorAll(".tries img");
 };
+
+const initializeNewDOMElements = () => {
+    const overlayParagraph = document.createElement('p');
+    overlay.appendChild(overlayParagraph);
+    overlayParagraph.setAttribute("id", "overlay-message");
+}
 
 /**
  * Function to add event listeners to previously defined DOM elements.
@@ -120,7 +126,7 @@ Array.prototype.getRandomElement = function() {
  * concatenated string of list items.
  */
 const addPhraseToDisplay = () => {
-    const phrase = phrases.getRandomElement();
+    phrase = phrases.getRandomElement();
     const words = phrase.split(" ");
     let currentLineLength = 0;
     let maxCharsPerLine = 14;  // Max number of reasonable letters for 1024px
@@ -216,6 +222,7 @@ const endGame = (endType) => {
         `${happy.messages.getRandomElement()} ${happy.emojis.getRandomElement()}` : 
         `${sad.messages.getRandomElement()} ${sad.emojis.getRandomElement()}`;
     resetButton.innerText = "Play again";
+    document.getElementById("overlay-message").innerText = `Correct answer: "${phrase}"`;
     overlay.style.display = "flex";
     overlay.classList.add(endType);
     overlay.getElementsByClassName("title")[0].innerText = message;
@@ -273,5 +280,6 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeGameData();
     initializeGameStatistics();
     initializeDOMVariables();
+    initializeNewDOMElements();
     addEventListeners();
 });
