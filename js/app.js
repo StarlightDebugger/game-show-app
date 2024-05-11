@@ -1,9 +1,10 @@
 // Uninitialized global game data variables
-let phrases, sounds, moods, happy, sad, correctSound, incorrectSound, gameWinSound, gameLoseSound, allSounds;
+let phrases, sounds, moods, happy, sad, correctSound, incorrectSound, 
+    gameWinSound, gameLoseSound, allSounds, gameColors;
 
 // Uninitialized global DOM Element variables
 let keyboard, banner, keys, phraseDisplay, phraseDisplayList, resetButton, overlay, 
-    overlayTitle, allLetters, allShownLetters, hearts, soundButton, settingsAndInfo;
+    overlayTitle, allLetters, allShownLetters, header, hearts, soundButton, settingsAndInfo;
 
 
 // Unitialized Game options
@@ -25,6 +26,7 @@ const initializeGameData = () => {
     phrases = window.gameData.phrases;
     sounds = window.gameData.sounds;
     moods = window.gameData.moods;
+    uiColors = window.gameData.uiColors;
     happy = moods.happy;
     sad = moods.sad;
   
@@ -56,6 +58,7 @@ const initializeGameStatistics = () => {
  */
 const initializeDOMVariables = () => {
     banner = document.getElementById('banner');
+    header = document.getElementsByClassName('header')[0];
     keyboard = document.getElementById('qwerty');
     keys = keyboard.getElementsByTagName("button");
     phraseDisplay = document.getElementById('phrase');
@@ -96,6 +99,17 @@ const initializeGameOptions = () => {
 };
 
 /**
+ * Function to initialize colors on the UI while playing the game such as the letters and title
+ */
+const initializeUIColors = () => {
+    gameColors = {
+        header: uiColors.getRandomElement(),
+        letterBackground: uiColors.getRandomElement()
+    }
+    header.style.color = gameColors.header;
+}
+
+/**
  * Function to add event listeners to previously defined DOM elements.
  * The event object 'e' is explicitly passed to handle Firefox's non-global event handling.
  * @param {Event} e - The global event object needed by the event listeners.
@@ -127,6 +141,7 @@ const addEventListeners = (e) => {
         resetKeyboard();
         resetHearts();
         addPhraseToDisplay();
+        initializeUIColors();
     });
 
     soundButton.addEventListener("click", (e) => {
@@ -213,6 +228,7 @@ const checkLetter = (buttonPressed) => {
     for(let letter of allLetters) {
         if(letter.innerText === buttonPressed) {
             letter.classList.add("show", "animate__animated", "animate__fadeIn");
+            letter.style.background = gameColors.letterBackground;
             match = true;
         }
     }
@@ -349,5 +365,6 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeDOMVariables();
     initializeNewDOMElements();
     initializeGameOptions();
+    initializeUIColors();
     addEventListeners();
 });

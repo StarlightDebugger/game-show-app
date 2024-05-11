@@ -11,6 +11,36 @@ const gamePhrases = [
     "time waits for no one"
 ];
 
+// Colors to use during gameplay before a win or a loss
+const gameUIColors = [
+    "#FF6347", // Tomato
+    "#FF4500", // OrangeRed
+    "#FFD700", // Gold
+    "#FFA500", // Orange
+    "#FF69B4", // HotPink
+    "#FF1493", // DeepPink
+    "#DB7093", // PaleVioletRed
+    "#E6E91A", // Laser Lemon
+    "#32CD32", // LimeGreen
+    "#00FF00", // Lime
+    "#7CFC00", // LawnGreen
+    "#40E0D0", // Turquoise
+    "#00FA9A", // MediumSpringGreen
+    "#00BFFF", // DeepSkyBlue
+    "#1E90FF", // DodgerBlue
+    "#9370DB", // MediumPurple
+    "#8A2BE2", // BlueViolet
+    "#BA55D3", // MediumOrchid
+    "#FF00FF", // Magenta
+    "#FF8C00", // DarkOrange
+    "#FF6347", // Tomato
+    "#FF7F50", // Coral
+    "#4682B4", // SteelBlue
+    "#6A5ACD", // SlateBlue
+    "#DA70D6"  // Orchid
+];
+
+// Object to hold different bits of data relating to the mood of the game as determined by a win or a loss
 const gameMoods = {
     happy: {
         font_rule: "happy-font",
@@ -119,5 +149,6 @@ const gameSounds = {
 window.gameData = {
     phrases: gamePhrases,
     sounds: gameSounds,
-    moods: gameMoods
+    moods: gameMoods,
+    uiColors: gameUIColors
 };
