@@ -1,6 +1,8 @@
+"use strict";
+
 // Uninitialized global game data variables
-let phrases, sounds, moods, happy, sad, correctSound, incorrectSound, 
-    gameWinSound, gameLoseSound, allSounds, gameColors;
+let phrases, animations, roundAnimations, sounds, moods, happy, sad, correctSound, incorrectSound, 
+    gameWinSound, gameLoseSound, allSounds, gameColors, uiColors;
 
 // Uninitialized global DOM Element variables
 let keyboard, banner, keys, phraseDisplay, phraseDisplayList, resetButton, overlay, 
@@ -27,6 +29,7 @@ const initializeGameData = () => {
     sounds = window.gameData.sounds;
     moods = window.gameData.moods;
     uiColors = window.gameData.uiColors;
+    animations = window.gameData.animations;
     happy = moods.happy;
     sad = moods.sad;
   
@@ -110,6 +113,18 @@ const initializeUIColors = () => {
 }
 
 /**
+ * Function to initialize animations to be used in a single round.
+ * Randomizing animations per guess is too much.
+ */
+const initializeRoundAnimations = () => {
+    roundAnimations = {
+        heartOut: animations.exits.getRandomElement(),
+        overlayIn: animations.entrances.getRandomElement(),
+        letterIn: animations.entrances.getRandomElement()
+    };
+};
+
+/**
  * Function to add event listeners to previously defined DOM elements.
  * The event object 'e' is explicitly passed to handle Firefox's non-global event handling.
  * @param {Event} e - The global event object needed by the event listeners.
@@ -135,13 +150,13 @@ const addEventListeners = (e) => {
      * @param {Event} e global event listener
      */
     resetButton.addEventListener("click", e => {
-        overlay.style.display = "none";
-        resetOverlayClasses();
+        resetOverlay();
         resetMissed();
         resetKeyboard();
         resetHearts();
         addPhraseToDisplay();
         initializeUIColors();
+        initializeRoundAnimations();
         setHeartHues();
     });
 
@@ -241,7 +256,7 @@ const checkLetter = (buttonPressed) => {
     let match = false;
     for(let letter of allLetters) {
         if(letter.innerText === buttonPressed) {
-            letter.classList.add("show", "animate__animated", "animate__fadeIn");
+            letter.classList.add("show", "animate__animated", `animate__${roundAnimations.letterIn}`);
             letter.style.background = gameColors.letterBackground;
             match = true;
         }
@@ -281,7 +296,9 @@ const checkForLose = () => {
  * loss of heart or "life."
  */
 const removeHeart = () => {
-    hearts[hearts.length - numberMissed].setAttribute("src", "images/lostHeart.png");
+    const lastHeart = hearts[hearts.length - numberMissed];
+    lastHeart.classList.add("animate__animated", `animate__${roundAnimations.heartOut}`);
+    lastHeart.setAttribute("src", "images/lostHeart.png");
 };
 
 /**
@@ -294,7 +311,8 @@ const removeHeart = () => {
 const endGame = (endType) => {
     removePhrase();
     const mood = endType == "win" ? moods.happy : moods.sad;
-    overlay.classList.add(endType);
+    overlay.classList = "start";
+    overlay.classList.add(endType, "animate__animated", `animate__${roundAnimations.overlayIn}`);
     endType == "win" ? gameWinSound.play() : gameLoseSound.play();
     let message = `${mood.messages.getRandomElement()} ${mood.emojis.getRandomElement()}`;
     resetButton.innerText = "Play again";
@@ -338,6 +356,7 @@ const resetMissed = () => { numberMissed = 0; }
  */
 const resetHearts = () => {
     for(let heart of hearts) {
+        heart.classList = "";
         heart.setAttribute("src", "images/liveHeart.png");
     }
 };
@@ -347,9 +366,10 @@ const resetHearts = () => {
  * a round is ever played. At that point, there is no win nor loss
  * so this is needed as a starting point.
  */
-const resetOverlayClasses = () => {
+const resetOverlay = () => {
     overlay.classList = "start";
     overlayTitle.classList = "";
+    overlay.style.display = "none";
 };
 
 /**
@@ -393,7 +413,6 @@ const getRandomNumber = (lower, upper) => {
  */
 const setHeartHues = () => {
     const newHeartHue = getRandomNumber(0, 360);
-    console.log(overlay.style.display);
     overlay.style.display == "none" ? 
     hearts.forEach((heart) => heart.style.filter = `hue-rotate(${newHeartHue}deg)`) :
     hearts.forEach((heart) => heart.style.removeProperty("filter"));
@@ -409,5 +428,6 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeNewDOMElements();
     initializeGameOptions();
     initializeUIColors();
+    initializeRoundAnimations();
     addEventListeners();
 });
