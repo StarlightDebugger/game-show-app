@@ -149,6 +149,19 @@ const addEventListeners = (e) => {
         toggleSounds(e);
         toggleSoundIcon(e);
     });
+
+    /**
+     * Attach event listener to prevent user from highlighting
+     * the hidden letters. If they want to cheat, they will have to open
+     * either the source code or the console!
+     * Note: initially tried with select, but the select event doesn't fire until 
+     * after the letters have been highlighted!
+     * @listens {mousedown} on the UL where the hidden letters are attached
+     * @param {Event} e global event object
+     */
+    phraseDisplayList.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+    });
 }
 
 // =============================
