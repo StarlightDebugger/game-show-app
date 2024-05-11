@@ -11,6 +11,104 @@ const gamePhrases = [
     "time waits for no one"
 ];
 
+/**
+ * Animations to be used per round in the game.
+ * These could be used per guess, but it seems like too much and too distracting
+ * for my tastes.
+ */
+const gameAnimations = {
+    entrances: [
+        "backInDown",
+        "backInLeft",
+        "backInRight",
+        "backInUp",
+        "bounceIn",
+        "bounceInDown",
+        "bounceInLeft",
+        "bounceInRight",
+        "bounceInUp",
+        "fadeIn",
+        "fadeInDown",
+        "fadeInDownBig",
+        "fadeInLeft",
+        "fadeInLeftBig",
+        "fadeInRight",
+        "fadeInRightBig",
+        "fadeInUp",
+        "fadeInUpBig",
+        "fadeInTopLeft",
+        "fadeInTopRight",
+        "fadeInBottomLeft",
+        "fadeInBottomRight",
+        "rotateIn",
+        "rotateInDownLeft",
+        "rotateInDownRight",
+        "rotateInUpLeft",
+        "rotateInUpRight",
+        "zoomIn",
+        "zoomInDown",
+        "zoomInLeft",
+        "zoomInRight",
+        "zoomInUp",
+        "slideInDown",
+        "slideInLeft",
+        "slideInRight",
+        "slideInUp"
+    ],
+    exits: [
+        "backOutDown",
+        "backOutLeft",
+        "backOutRight",
+        "backOutUp",
+        "bounceOut",
+        "bounceOutDown",
+        "bounceOutLeft",
+        "bounceOutRight",
+        "bounceOutUp",
+        "fadeOut",
+        "fadeOutDown",
+        "fadeOutDownBig",
+        "fadeOutLeft",
+        "fadeOutLeftBig",
+        "fadeOutRight",
+        "fadeOutRightBig",
+        "fadeOutUp",
+        "fadeOutUpBig",
+        "fadeOutTopLeft",
+        "fadeOutTopRight",
+        "fadeOutBottomRight",
+        "fadeOutBottomLeft",
+        "rotateOut",
+        "rotateOutDownLeft",
+        "rotateOutDownRight",
+        "rotateOutUpLeft",
+        "rotateOutUpRight",
+        "zoomOut",
+        "zoomOutDown",
+        "zoomOutLeft",
+        "zoomOutRight",
+        "zoomOutUp",
+        "slideOutDown",
+        "slideOutLeft",
+        "slideOutRight",
+        "slideOutUp"
+    ],
+    attentionGetters: [
+        "bounce",
+        "flash",
+        "pulse",
+        "rubberBand",
+        "shakeX",
+        "shakeY",
+        "headShake",
+        "swing",
+        "tada",
+        "wobble",
+        "jello",
+        "heartBeat"
+    ]
+}
+
 // Colors to use during gameplay before a win or a loss
 const gameUIColors = [
     "#FF6347", // Tomato
@@ -150,5 +248,6 @@ window.gameData = {
     phrases: gamePhrases,
     sounds: gameSounds,
     moods: gameMoods,
-    uiColors: gameUIColors
+    uiColors: gameUIColors,
+    animations: gameAnimations
 };
