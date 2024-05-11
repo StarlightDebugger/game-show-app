@@ -217,15 +217,17 @@ const removeHeart = () => {
  */
 const endGame = (endType) => {
     removePhrase();
+    const overlayTitle = document.getElementsByClassName("title")[0];
+    const mood = endType == "win" ? moods.happy : moods.sad;
+    overlay.classList.add(endType);
     endType == "win" ? gameWinSound.play() : gameLoseSound.play();
-    let message = endType == "win" ? 
-        `${happy.messages.getRandomElement()} ${happy.emojis.getRandomElement()}` : 
-        `${sad.messages.getRandomElement()} ${sad.emojis.getRandomElement()}`;
+    let message = `${mood.messages.getRandomElement()} ${mood.emojis.getRandomElement()}`;
     resetButton.innerText = "Play again";
+    overlayTitle.classList.add(mood.font_rule);
+    overlayTitle.style.textTransform = "capitalize";
     document.getElementById("overlay-message").innerText = `Correct answer: "${phrase}"`;
     overlay.style.display = "flex";
-    overlay.classList.add(endType);
-    overlay.getElementsByClassName("title")[0].innerText = message;
+    overlayTitle.innerText = message;
 }
 
 /**
