@@ -104,19 +104,29 @@ const addEventListeners = (e) => {
 // Helper Function Definitions
 // =============================
 
-/**
- * Because of frequent use a method was added directly onto the Array prototype
- * for readability purposes. A bitwise ~~ was used for the slight performance increase
- * over Math.floor(); This would not work if the value were a negative number or 
- * a string, but since it's a positive integer or 0, this is preferable.
- * https://stackoverflow.com/questions/13847053/difference-between-and-math-floor
- * 
- * @returns A random element from an array
- */
-Array.prototype.getRandomElement = function() {
-    return this[~~(Math.random() * this.length)];
-}
-
+// If the getRandomElement does not exist on the Array data type, add it
+if (!Array.prototype.getRandomElement) {
+    /**
+     * Extends the Array prototype to include a `getRandomElement` method.
+     * Utilizes a bitwise double NOT operator (`~~`) to truncate the decimal, 
+     * providing a slight performance increase over `Math.floor()`. This method is
+     * intended for use with arrays containing non-negative integer indices.
+     * Note: Assumes the array is not empty.
+     * 
+     * One benefit of defining this method on the Array prototype is that IDEs will
+     * not offer `getRandomElement` as a completion option for objects that are not arrays,
+     * thereby providing a modicum of type safety.
+     * 
+     * Reference on performance: 
+     * https://stackoverflow.com/questions/13847053/difference-between-and-math-floor
+     * 
+     * @returns {any} A random element from the array or `undefined` if the array is empty.
+     */
+        Array.prototype.getRandomElement = function() {
+            return this.length === 0 ? undefined : this[~~(Math.random() * this.length)];
+        };
+    }
+    
 /**
  * Gets random element from phrases Array as a string
  * Splits string on space and turns into array of words
