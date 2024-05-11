@@ -13,6 +13,7 @@ const gamePhrases = [
 
 const gameMoods = {
     happy: {
+        font_rule: "happy-font",
         messages: [
            "outstanding victory!",
            "brilliant success!",
@@ -39,6 +40,7 @@ const gameMoods = {
         ]
     },
     sad: {
+        font_rule: "sad-font",
         messages: [
             "tough luck!",
             "so close!",

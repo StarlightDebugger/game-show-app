@@ -2,7 +2,7 @@
 let phrases, sounds, moods, happy, sad, correctSound, incorrectSound, gameWinSound, gameLoseSound;
 
 // Uninitialized global DOM Element variables
-let keyboard, keys, phraseDisplay, phraseDisplayList, resetButton, overlay, allLetters, allShownLetters, hearts;
+let keyboard, keys, phraseDisplay, phraseDisplayList, resetButton, overlay, overlayTitle, allLetters, allShownLetters, hearts;
 
 // Uninitialized Game Statistics variables
 let numberMissed, phrase;
@@ -53,6 +53,7 @@ const initializeDOMVariables = () => {
     phraseDisplayList = phraseDisplay.getElementsByTagName('ul')[0];
     resetButton = document.getElementsByClassName('btn__reset')[0];
     overlay = document.getElementById('overlay');
+    overlayTitle = document.getElementsByClassName("title")[0];
     allLetters = document.getElementsByClassName('letter');
     allShownLetters = document.getElementsByClassName('show');
     hearts = document.querySelectorAll(".tries img");
@@ -217,15 +218,16 @@ const removeHeart = () => {
  */
 const endGame = (endType) => {
     removePhrase();
+    const mood = endType == "win" ? moods.happy : moods.sad;
+    overlay.classList.add(endType);
     endType == "win" ? gameWinSound.play() : gameLoseSound.play();
-    let message = endType == "win" ? 
-        `${happy.messages.getRandomElement()} ${happy.emojis.getRandomElement()}` : 
-        `${sad.messages.getRandomElement()} ${sad.emojis.getRandomElement()}`;
+    let message = `${mood.messages.getRandomElement()} ${mood.emojis.getRandomElement()}`;
     resetButton.innerText = "Play again";
+    overlayTitle.classList.add(mood.font_rule);
+    overlayTitle.style.textTransform = "capitalize";
     document.getElementById("overlay-message").innerText = `Correct answer: "${phrase}"`;
     overlay.style.display = "flex";
-    overlay.classList.add(endType);
-    overlay.getElementsByClassName("title")[0].innerText = message;
+    overlayTitle.innerText = message;
 }
 
 /**
@@ -271,6 +273,7 @@ const resetHearts = () => {
  */
 const resetOverlayClasses = () => {
     overlay.classList = "start";
+    overlayTitle.classList = "";
 };
 
 // ============================================================================
