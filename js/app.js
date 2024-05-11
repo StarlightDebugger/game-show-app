@@ -1,9 +1,10 @@
 // Uninitialized global game data variables
-let phrases, sounds, moods, happy, sad, correctSound, incorrectSound, gameWinSound, gameLoseSound, allSounds;
+let phrases, sounds, moods, happy, sad, correctSound, incorrectSound, 
+    gameWinSound, gameLoseSound, allSounds, gameColors;
 
 // Uninitialized global DOM Element variables
 let keyboard, banner, keys, phraseDisplay, phraseDisplayList, resetButton, overlay, 
-    overlayTitle, allLetters, allShownLetters, hearts, soundButton, settingsAndInfo;
+    overlayTitle, allLetters, allShownLetters, header, hearts, soundButton, settingsAndInfo;
 
 
 // Unitialized Game options
@@ -25,6 +26,7 @@ const initializeGameData = () => {
     phrases = window.gameData.phrases;
     sounds = window.gameData.sounds;
     moods = window.gameData.moods;
+    uiColors = window.gameData.uiColors;
     happy = moods.happy;
     sad = moods.sad;
   
@@ -56,6 +58,7 @@ const initializeGameStatistics = () => {
  */
 const initializeDOMVariables = () => {
     banner = document.getElementById('banner');
+    header = document.getElementsByClassName('header')[0];
     keyboard = document.getElementById('qwerty');
     keys = keyboard.getElementsByTagName("button");
     phraseDisplay = document.getElementById('phrase');
@@ -96,6 +99,17 @@ const initializeGameOptions = () => {
 };
 
 /**
+ * Function to initialize colors on the UI while playing the game such as the letters and title
+ */
+const initializeUIColors = () => {
+    gameColors = {
+        header: uiColors.getRandomElement(),
+        letterBackground: uiColors.getRandomElement()
+    }
+    header.style.color = gameColors.header;
+}
+
+/**
  * Function to add event listeners to previously defined DOM elements.
  * The event object 'e' is explicitly passed to handle Firefox's non-global event handling.
  * @param {Event} e - The global event object needed by the event listeners.
@@ -127,6 +141,8 @@ const addEventListeners = (e) => {
         resetKeyboard();
         resetHearts();
         addPhraseToDisplay();
+        initializeUIColors();
+        setHeartHues();
     });
 
     soundButton.addEventListener("click", (e) => {
@@ -213,6 +229,7 @@ const checkLetter = (buttonPressed) => {
     for(let letter of allLetters) {
         if(letter.innerText === buttonPressed) {
             letter.classList.add("show", "animate__animated", "animate__fadeIn");
+            letter.style.background = gameColors.letterBackground;
             match = true;
         }
     }
@@ -272,6 +289,7 @@ const endGame = (endType) => {
     overlayTitle.style.textTransform = "capitalize";
     document.getElementById("overlay-message").innerText = `Correct answer: "${phrase}"`;
     overlay.style.display = "flex";
+    setHeartHues();
     overlayTitle.innerText = message;
 }
 
@@ -340,6 +358,34 @@ const toggleSoundIcon = (e) => {
         `<i class="fa-solid fa-volume-off"></i>`;
 }
 
+/**
+ * Utility function to get a random number given a lower and upper bound
+ * Again, the double negation unary operator is used here for performance purposes.
+ * Although this may be used to generate negative numbers we're doing so randomly
+ * and a value of 1 is within the tolerance range and negligible to the effects.
+ * Lower bound is inclusive.
+ * Upper bound is EXCLUSIVE!!!
+ * @param {Number} lower the lower bound for the number to be returned inclusive
+ * @param {Number} upper the upper bound for the number to be returned NOT INCLUSIVE
+ * @returns {Number} integer between lower (inclusive) and upper (exclusive)
+*/
+const getRandomNumber = (lower, upper) => {
+    return ~~(Math.random() * (upper - lower) + lower);
+}
+
+/**
+ * Sets a random hue on a heart. Function needed because any filter
+ * applied to the image while the overlay is on causes the hearts to show
+ * through the overlay.
+ */
+const setHeartHues = () => {
+    const newHeartHue = getRandomNumber(0, 360);
+    console.log(overlay.style.display);
+    overlay.style.display == "none" ? 
+    [...hearts].forEach((heart) => heart.style.filter = `hue-rotate(${newHeartHue}deg)`) :
+    [...hearts].forEach((heart) => heart.style.removeProperty("filter"));
+}
+
 // ============================================================================
 // Entry point to start the application and initialize data and variables
 // ============================================================================
@@ -349,5 +395,6 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeDOMVariables();
     initializeNewDOMElements();
     initializeGameOptions();
+    initializeUIColors();
     addEventListeners();
 });
