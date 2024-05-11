@@ -37,7 +37,7 @@ const initializeGameData = () => {
     gameLoseSound = new Audio(sounds.lose.path);
     allSounds = [correctSound, incorrectSound, gameWinSound, gameLoseSound];
     // Set the volume to a reasonable level to start
-    [...allSounds].forEach((sound) => sound.volume = 0.3);
+    allSounds.forEach((sound) => sound.volume = 0.3);
 };
 
 /**
