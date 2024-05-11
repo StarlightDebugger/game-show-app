@@ -142,6 +142,7 @@ const addEventListeners = (e) => {
         resetHearts();
         addPhraseToDisplay();
         initializeUIColors();
+        setHeartHues();
     });
 
     soundButton.addEventListener("click", (e) => {
@@ -288,6 +289,7 @@ const endGame = (endType) => {
     overlayTitle.style.textTransform = "capitalize";
     document.getElementById("overlay-message").innerText = `Correct answer: "${phrase}"`;
     overlay.style.display = "flex";
+    setHeartHues();
     overlayTitle.innerText = message;
 }
 
@@ -354,6 +356,34 @@ const toggleSoundIcon = (e) => {
     soundButton.innerHTML = soundEnabled ? 
         `<i class="fa-solid fa-volume-high"></i>` :
         `<i class="fa-solid fa-volume-off"></i>`;
+}
+
+/**
+ * Utility function to get a random number given a lower and upper bound
+ * Again, the double negation unary operator is used here for performance purposes.
+ * Although this may be used to generate negative numbers we're doing so randomly
+ * and a value of 1 is within the tolerance range and negligible to the effects.
+ * Lower bound is inclusive.
+ * Upper bound is EXCLUSIVE!!!
+ * @param {Number} lower the lower bound for the number to be returned inclusive
+ * @param {Number} upper the upper bound for the number to be returned NOT INCLUSIVE
+ * @returns {Number} integer between lower (inclusive) and upper (exclusive)
+*/
+const getRandomNumber = (lower, upper) => {
+    return ~~(Math.random() * (upper - lower) + lower);
+}
+
+/**
+ * Sets a random hue on a heart. Function needed because any filter
+ * applied to the image while the overlay is on causes the hearts to show
+ * through the overlay.
+ */
+const setHeartHues = () => {
+    const newHeartHue = getRandomNumber(0, 360);
+    console.log(overlay.style.display);
+    overlay.style.display == "none" ? 
+    [...hearts].forEach((heart) => heart.style.filter = `hue-rotate(${newHeartHue}deg)`) :
+    [...hearts].forEach((heart) => heart.style.removeProperty("filter"));
 }
 
 // ============================================================================
