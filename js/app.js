@@ -1,8 +1,13 @@
 // Uninitialized global game data variables
-let phrases, sounds, moods, happy, sad, correctSound, incorrectSound, gameWinSound, gameLoseSound;
+let phrases, sounds, moods, happy, sad, correctSound, incorrectSound, gameWinSound, gameLoseSound, allSounds;
 
 // Uninitialized global DOM Element variables
-let keyboard, keys, phraseDisplay, phraseDisplayList, resetButton, overlay, overlayTitle, allLetters, allShownLetters, hearts;
+let keyboard, banner, keys, phraseDisplay, phraseDisplayList, resetButton, overlay, 
+    overlayTitle, allLetters, allShownLetters, hearts, soundButton, settingsAndInfo;
+
+
+// Unitialized Game options
+let soundEnabled;
 
 // Uninitialized Game Statistics variables
 let numberMissed, phrase;
@@ -28,6 +33,9 @@ const initializeGameData = () => {
     incorrectSound = new Audio(sounds.incorrect.path);
     gameWinSound = new Audio(sounds.win.path);
     gameLoseSound = new Audio(sounds.lose.path);
+    allSounds = [correctSound, incorrectSound, gameWinSound, gameLoseSound];
+    // Set the volume to a reasonable level to start
+    [...allSounds].forEach((sound) => sound.volume = 0.3);
 };
 
 /**
@@ -47,6 +55,7 @@ const initializeGameStatistics = () => {
  * unnecessary.
  */
 const initializeDOMVariables = () => {
+    banner = document.getElementById('banner');
     keyboard = document.getElementById('qwerty');
     keys = keyboard.getElementsByTagName("button");
     phraseDisplay = document.getElementById('phrase');
@@ -59,11 +68,32 @@ const initializeDOMVariables = () => {
     hearts = document.querySelectorAll(".tries img");
 };
 
+/**
+ * Because altering the HTML directly in the index.html file is not encouraged
+ * for this project, some DOM objects need to be created through JavaScript.
+ */
 const initializeNewDOMElements = () => {
+    // Create a div and elements to display accessibility settings and streak information
+    settingsAndInfo = document.createElement("div");
+    settingsAndInfo.setAttribute("id", "settings-and-info");
+    soundButton = document.createElement("button");
+    soundButton.setAttribute("id", "sound-button");
+    soundButton.innerHTML = `<i class="fa-solid fa-volume-high"></i>`;
+    settingsAndInfo.appendChild(soundButton);
+    banner.insertAdjacentElement('beforebegin', settingsAndInfo);
+    // Create a paragraph for messaging purposes on the overlay
     const overlayParagraph = document.createElement('p');
     overlay.appendChild(overlayParagraph);
     overlayParagraph.setAttribute("id", "overlay-message");
-}
+};
+
+/**
+ * Function to initialize options that affect how the game is experienced by the player
+ */
+
+const initializeGameOptions = () => {
+    soundEnabled = true;
+};
 
 /**
  * Function to add event listeners to previously defined DOM elements.
@@ -97,6 +127,11 @@ const addEventListeners = (e) => {
         resetKeyboard();
         resetHearts();
         addPhraseToDisplay();
+    });
+
+    soundButton.addEventListener("click", (e) => {
+        toggleSounds(e);
+        toggleSoundIcon(e);
     });
 }
 
@@ -286,6 +321,25 @@ const resetOverlayClasses = () => {
     overlayTitle.classList = "";
 };
 
+/**
+ * Mute all sounds on page
+ */
+const toggleSounds = () => {
+    soundEnabled = !soundEnabled;
+    for(let sound of allSounds) {
+        sound.muted = !soundEnabled;
+    }
+}
+
+/**
+ * Toggle the sound icon to reflect whether sound is on or off
+ */
+const toggleSoundIcon = (e) => {
+    soundButton.innerHTML = soundEnabled ? 
+        `<i class="fa-solid fa-volume-high"></i>` :
+        `<i class="fa-solid fa-volume-off"></i>`;
+}
+
 // ============================================================================
 // Entry point to start the application and initialize data and variables
 // ============================================================================
@@ -294,5 +348,6 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeGameStatistics();
     initializeDOMVariables();
     initializeNewDOMElements();
+    initializeGameOptions();
     addEventListeners();
 });
