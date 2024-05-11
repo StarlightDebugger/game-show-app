@@ -192,3 +192,17 @@ button {
 a {
   cursor: pointer;
 }
+
+#settings-and-info {
+  height: 75px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+#sound-button {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  background-color: transparent;
+}
