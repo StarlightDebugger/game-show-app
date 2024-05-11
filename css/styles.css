@@ -56,6 +56,7 @@ button {
   -webkit-transition: var(--transition);
   -o-transition: var(--transition);
   transition: var(--transition);
+  cursor: pointer;
 }
 
 .main-container {
@@ -110,6 +111,10 @@ button {
 .keyrow {
   display: flex;
   justify-content: center;
+}
+
+.keyrow button {
+  cursor: pointer;
 }
 
 .chosen {
@@ -182,4 +187,8 @@ button {
 .sad-font {
   font-family: "Shadows Into Light", cursive;
   letter-spacing: .15em;
+}
+
+a {
+  cursor: pointer;
 }
