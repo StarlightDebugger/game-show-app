@@ -40,7 +40,7 @@ const gameMoods = {
         ]
     },
     sad: {
-        font_rule: `"Shadows Into Light", cursive;`,
+        font_rule: "sad-font",
         messages: [
             "tough luck!",
             "so close!",
