@@ -382,8 +382,8 @@ const setHeartHues = () => {
     const newHeartHue = getRandomNumber(0, 360);
     console.log(overlay.style.display);
     overlay.style.display == "none" ? 
-    [...hearts].forEach((heart) => heart.style.filter = `hue-rotate(${newHeartHue}deg)`) :
-    [...hearts].forEach((heart) => heart.style.removeProperty("filter"));
+    hearts.forEach((heart) => heart.style.filter = `hue-rotate(${newHeartHue}deg)`) :
+    hearts.forEach((heart) => heart.style.removeProperty("filter"));
 }
 
 // ============================================================================
