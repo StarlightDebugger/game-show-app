@@ -130,7 +130,7 @@ const initializeUIColors = () => {
 const initializeRoundAnimations = () => {
     roundAnimations = {
         heartOut: animations.exits.getRandomElement(),
-        overlayIn: animations.entrances.getRandomElement(),
+        overlayIn: "fadeIn",
         letterIn: animations.entrances.getRandomElement()
     };
 };
@@ -328,7 +328,7 @@ const endGame = (endType) => {
     overlay.style.background = mood.colors.getRandomElement();
     document.getElementById("cloud").style.boxShadow = createDynamicClouds(mood.colors);
     overlay.classList = "start";
-    overlay.classList.add(endType, "animate__animated", `animate__${roundAnimations.overlayIn}`);
+    overlay.classList.add(endType, "animate__animated", `animate__${roundAnimations.overlayIn}`, "animate__slow");
     endType == "win" ? gameWinSound.play() : gameLoseSound.play();
     let message = `${mood.messages.getRandomElement()} ${mood.emojis.getRandomElement()}`;
     overlayTitle.innerText = message;

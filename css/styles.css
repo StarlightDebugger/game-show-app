@@ -231,7 +231,6 @@ a {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  background-color: #000;
   width: 60%;
   height: 45%;
   margin: 50px;
