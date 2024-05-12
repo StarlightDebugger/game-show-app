@@ -218,6 +218,7 @@ a {
 
 /* Taken from this codepen: https://codepen.io/yuanchuan/pen/OBRrrO/f70a1f9435dc90197b253b26b4d69d42 */
 #cloud {
+  align-self: flex-start;
   overflow: hidden;
   width: 1px; 
   height: 1px;
