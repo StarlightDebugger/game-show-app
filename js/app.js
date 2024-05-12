@@ -5,7 +5,7 @@ let phrases, animations, roundAnimations, sounds, moods, happy, sad, correctSoun
     gameWinSound, gameLoseSound, allSounds, gameColors, uiColors;
 
 // Uninitialized global DOM Element variables
-let keyboard, banner, keys, phraseDisplay, phraseDisplayList, resetButton, overlay, 
+let keyboard, banner, cloud, keys, messaging, phraseDisplay, phraseDisplayList, resetButton, overlay, 
     overlayTitle, allLetters, allShownLetters, header, hearts, soundButton, settingsAndInfo;
 
 
@@ -62,6 +62,7 @@ const initializeGameStatistics = () => {
 const initializeDOMVariables = () => {
     banner = document.getElementById('banner');
     header = document.getElementsByClassName('header')[0];
+    messaging = document.getElementById('messaging');
     keyboard = document.getElementById('qwerty');
     keys = keyboard.getElementsByTagName("button");
     phraseDisplay = document.getElementById('phrase');
@@ -79,6 +80,16 @@ const initializeDOMVariables = () => {
  * for this project, some DOM objects need to be created through JavaScript.
  */
 const initializeNewDOMElements = () => {
+    // Create SVG with filter
+    const cloudSVGDiv = document.createElement("div");
+    cloudSVGDiv.setAttribute("id", "cloud");
+    cloudSVGDiv.innerHTML = `<svg width="0">
+                            <filter id="filter">
+                                <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="10" />
+                                <feDisplacementMap in="SourceGraphic" scale="300" />
+                            </filter>
+                        </svg>`;
+    messaging.insertAdjacentElement('beforebegin', cloudSVGDiv);
     // Create a div and elements to display accessibility settings and streak information
     settingsAndInfo = document.createElement("div");
     settingsAndInfo.setAttribute("id", "settings-and-info");
@@ -89,8 +100,8 @@ const initializeNewDOMElements = () => {
     banner.insertAdjacentElement('beforebegin', settingsAndInfo);
     // Create a paragraph for messaging purposes on the overlay
     const overlayParagraph = document.createElement('p');
-    overlay.appendChild(overlayParagraph);
     overlayParagraph.setAttribute("id", "overlay-message");
+    resetButton.insertAdjacentElement('beforebegin', overlayParagraph);
 };
 
 /**
@@ -311,17 +322,25 @@ const removeHeart = () => {
 const endGame = (endType) => {
     removePhrase();
     const mood = endType == "win" ? moods.happy : moods.sad;
+    const contrastingMoodColor = endType == "win" ? uiColors.getRandomElement() : "white";
+    messaging.style.background = endType == "win" ? "white" : "black";
+    messaging.style.opacity = 0.8;
+    overlay.style.background = mood.colors.getRandomElement();
+    document.getElementById("cloud").style.boxShadow = createDynamicClouds(mood.colors);
     overlay.classList = "start";
     overlay.classList.add(endType, "animate__animated", `animate__${roundAnimations.overlayIn}`);
     endType == "win" ? gameWinSound.play() : gameLoseSound.play();
     let message = `${mood.messages.getRandomElement()} ${mood.emojis.getRandomElement()}`;
+    overlayTitle.innerText = message;
+    overlay.style.color = contrastingMoodColor;
+    resetButton.style.backgroundColor = uiColors.getRandomElement();
+    resetButton.style.color = "white";
     resetButton.innerText = "Play again";
     overlayTitle.classList.add(mood.font_rule);
     overlayTitle.style.textTransform = "capitalize";
     document.getElementById("overlay-message").innerText = `Correct answer: "${phrase}"`;
     overlay.style.display = "flex";
     setHeartHues();
-    overlayTitle.innerText = message;
 }
 
 /**
@@ -418,6 +437,22 @@ const setHeartHues = () => {
     hearts.forEach((heart) => heart.style.removeProperty("filter"));
 }
 
+/**
+ * Adapted heavily from this codepen https://codepen.io/yuanchuan/pen/OBRrrO/f70a1f9435dc90197b253b26b4d69d42
+ * JS was entirely rewritten due to the original JS not having good
+ * naming conventions for functions and variables. The idea here is that we
+ * are creating an SVG out of a bunch of randomly generated box shadows 
+ * based on randomly selected colors. The result is a fairly realistic
+ * cloudy sky.
+ * @param {Array} moodColors the array of colors from which to generate the clouds
+ */
+const createDynamicClouds = (moodColors) => {
+    const svgResult = [];
+    for(let i = 0; i < 100; i++) {
+        svgResult.push(`${getRandomNumber(1,100)}vw ${getRandomNumber(1, 100)}vh ${getRandomNumber(10, 35)}vmin ${getRandomNumber(1, 25)}vmin ${moodColors.getRandomElement()}`);
+    }
+    return svgResult.join(",");
+}
 // ============================================================================
 // Entry point to start the application and initialize data and variables
 // ============================================================================
