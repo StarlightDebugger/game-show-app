@@ -165,7 +165,44 @@ const gameMoods = {
             "💃🏼", // Woman dancing (medium-light skin tone)
             "🕺🏾", // Man dancing (medium-dark skin tone)
             "🍾"  // Bottle with popping cork
-        ]
+        ],
+        colors: [
+            "#FFFFFF", // White
+            "#FFD700", // Gold
+            "#FF69B4", // Hot Pink
+            "#7CFC00", // Lawn Green
+            "#00BFFF", // Deep Sky Blue
+            "#9370DB", // Medium Purple
+            "#FFA07A", // Light Salmon
+            "#FF6347", // Tomato
+            "#FA8072", // Salmon
+            "#FFFF54", // Laser Lemon
+            "#FFC0CB", // Pink
+            "#FFB6C1", // Light Pink
+            "#FF4500", // Orange Red
+            "#FF8C00", // Dark Orange
+            "#FFFF00", // Yellow
+            "#00FF00", // Lime
+            "#32CD32", // Lime Green
+            "#98FB98", // Pale Green
+            "#00FA9A", // Medium Spring Green
+            "#00FFFF", // Aqua
+            "#E0FFFF", // Light Cyan
+            "#ADD8E6", // Light Blue
+            "#87CEFA", // Light Sky Blue
+            "#87CEEB", // Sky Blue
+            "#4682B4", // Steel Blue
+            "#DDA0DD", // Plum
+            "#EE82EE", // Violet
+            "#DA70D6", // Orchid
+            "#FF00FF", // Magenta
+            "#BA55D3", // Medium Orchid
+            "#9400D3", // Dark Violet
+            "#8A2BE2", // Blue Violet
+            "#4B0082", // Indigo
+            "#7B68EE", // Medium Slate Blue
+            "#6A5ACD"  // Slate Blue
+        ],
     },
     sad: {
         font_rule: "sad-font",
@@ -191,7 +228,44 @@ const gameMoods = {
             "😿", // Crying cat
             "🥀", // Wilted flower
             "🌧️"  // Cloud with rain
-        ]
+        ],
+        colors: [
+            "#000000", // Black
+            "#708090", // Slate Gray
+            "#778899", // Light Slate Gray
+            "#2F4F4F", // Dark Slate Gray
+            "#696969", // Dim Gray
+            "#808080", // Gray
+            "#A9A9A9", // Dark Gray
+            "#C0C0C0", // Silver
+            "#8B4513", // Saddle Brown
+            "#483D8B", // Dark Slate Blue
+            "#4B0082", // Indigo
+            "#8B0000", // Dark Red
+            "#800000", // Maroon
+            "#556B2F", // Dark Olive Green
+            "#006400", // Dark Green
+            "#8B008B", // Dark Magenta
+            "#9400D3", // Dark Violet
+            "#663399", // Rebecca Purple
+            "#333333", // Very Dark Gray
+            "#4A4A4A", // Mid Dark Gray
+            "#555555", // Davy's Gray
+            "#191970", // Midnight Blue
+            "#000080", // Navy
+            "#00008B", // Dark Blue
+            "#27408B", // Royal Blue (dark)
+            "#3B3B3B", // Dark Charcoal
+            "#5D5D5D", // Dim Dark Gray
+            "#7F7F7F", // Gray (Web)
+            "#202020", // Onyx
+            "#3D3D3D", // Jet
+            "#2C2C2C", // Charleston Green
+            "#36454F", // Charcoal
+            "#1B1B1B", // Eerie Black
+            "#0C0C0C", // Rich Black
+            "#262626"  // Dark Gray (X11)
+        ],
     }
 };
 

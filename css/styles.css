@@ -42,7 +42,7 @@ h2 {
   text-transform: uppercase;
   font-family: 'Open Sans', sans-serif;
   font-size: var(--font-size-large);
-  margin: 0;
+  margin: 10px 0px;
 }
 
 button {
@@ -140,6 +140,7 @@ button {
   position: fixed;
   color: #FFFFFF;
   justify-content: center;
+  align-items: center;
   top: 0;
   bottom: 0;
   left: 0;
@@ -189,6 +190,14 @@ button {
   letter-spacing: .15em;
 }
 
+.happy-bg {
+  background-color: rgb(178, 208, 247);
+}
+
+.sad-bg {
+  background-color: rgb(77, 77, 77);
+}
+
 a {
   cursor: pointer;
 }
@@ -205,4 +214,25 @@ a {
   height: 40px;
   margin: 10px;
   background-color: transparent;
+}
+
+/* Taken from this codepen: https://codepen.io/yuanchuan/pen/OBRrrO/f70a1f9435dc90197b253b26b4d69d42 */
+#cloud {
+  overflow: hidden;
+  width: 1px; 
+  height: 1px;
+  transform: translate(-100%, -100%);
+  border-radius: 50%;
+  filter: url(#filter);
+}
+
+#messaging {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+  width: 60%;
+  height: 45%;
+  margin: 50px;
+  opacity: 0.9;
 }
