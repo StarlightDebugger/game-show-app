@@ -328,7 +328,7 @@ const endGame = (endType) => {
     overlay.style.background = mood.colors.getRandomElement();
     document.getElementById("cloud").style.boxShadow = createDynamicClouds(mood.colors);
     overlay.classList = "start";
-    overlay.classList.add(endType, "animate__animated", `animate__${roundAnimations.overlayIn}`, "animate__slow");
+    overlay.classList.add(endType, "animate__animated", `animate__${roundAnimations.overlayIn}`);
     endType == "win" ? gameWinSound.play() : gameLoseSound.play();
     let message = `${mood.messages.getRandomElement()} ${mood.emojis.getRandomElement()}`;
     overlayTitle.innerText = message;
@@ -432,8 +432,9 @@ const getRandomNumber = (lower, upper) => {
  */
 const setHeartHues = () => {
     const newHeartHue = getRandomNumber(0, 360);
+    const newHeartSaturation = `${getRandomNumber(50, 250)}%`;
     overlay.style.display == "none" ? 
-    hearts.forEach((heart) => heart.style.filter = `hue-rotate(${newHeartHue}deg)`) :
+    hearts.forEach((heart) => heart.style.filter = `hue-rotate(${newHeartHue}deg) saturate(${newHeartSaturation})`) :
     hearts.forEach((heart) => heart.style.removeProperty("filter"));
 }
 
