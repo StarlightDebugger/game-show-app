@@ -56,41 +56,41 @@ const gameAnimations = {
         "slideInUp"
     ],
     exits: [
-        "backOutDown",
-        "backOutLeft",
-        "backOutRight",
-        "backOutUp",
+        // "backOutDown", stretches screen vertically
+        "backOutLeft", 
+        // "backOutRight", streteches screen horizontally
+        // "backOutUp", // no negative effects
         "bounceOut",
-        "bounceOutDown",
+        // "bounceOutDown", stretches screen vertically
         "bounceOutLeft",
-        "bounceOutRight",
+        // "bounceOutRight", stretches screen horizontally
         "bounceOutUp",
         "fadeOut",
-        "fadeOutDown",
+        // "fadeOutDown", // causes vertical scrollbar to present
         "fadeOutDownBig",
-        "fadeOutLeft",
+        // "fadeOutLeft", // no negative effects
         "fadeOutLeftBig",
         "fadeOutRight",
         "fadeOutRightBig",
         "fadeOutUp",
-        "fadeOutUpBig",
+        // "fadeOutUpBig",  // no negative effects
         "fadeOutTopLeft",
         "fadeOutTopRight",
         "fadeOutBottomRight",
-        "fadeOutBottomLeft",
+        // "fadeOutBottomLeft", // causes vertical scrollbar to present
         "rotateOut",
         "rotateOutDownLeft",
         "rotateOutDownRight",
         "rotateOutUpLeft",
         "rotateOutUpRight",
-        "zoomOut",
+        // "zoomOut", // no negative effects
         "zoomOutDown",
         "zoomOutLeft",
-        "zoomOutRight",
+        // "zoomOutRight", stretches screen horizontally
         "zoomOutUp",
         "slideOutDown",
-        "slideOutLeft",
-        "slideOutRight",
+        //"slideOutLeft",  // no negative effects
+        //"slideOutRight",  // no negative effects
         "slideOutUp"
     ],
     attentionGetters: [
