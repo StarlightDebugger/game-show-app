@@ -188,6 +188,27 @@ const addEventListeners = (e) => {
     phraseDisplayList.addEventListener("mousedown", (e) => {
         e.preventDefault();
     });
+
+    /**
+     * Attach event listener to enable playing using the physical keyboard.
+     * This is for accessibility purposes.
+     * @listens {keydown}
+     * @param {Event} e global event object
+     */
+    document.addEventListener("keydown", (e) => {
+        // press the start or play again button using Enter/Return if the overlay is active
+        if(overlay.style.display != "none" && e.code === "Enter") {
+            resetButton.click();
+        } else {  // otherwise, loop through the keys and press the corresponding key case insensitive
+            const keyPressed = e.key.toLocaleLowerCase();
+            for(let key of keys) {
+                if(key.innerText === keyPressed) {
+                    key.click();
+                    break;
+                }
+            }
+        }
+    });
 }
 
 // =============================
