@@ -56,41 +56,41 @@ const gameAnimations = {
         "slideInUp"
     ],
     exits: [
-        // "backOutDown", stretches screen vertically
+        "backOutDown", 
         "backOutLeft", 
-        // "backOutRight", streteches screen horizontally
-        // "backOutUp", // no negative effects
+        "backOutRight", 
+        "backOutUp",
         "bounceOut",
-        // "bounceOutDown", stretches screen vertically
+        "bounceOutDown",
         "bounceOutLeft",
-        // "bounceOutRight", stretches screen horizontally
+        "bounceOutRight",
         "bounceOutUp",
         "fadeOut",
-        // "fadeOutDown", // causes vertical scrollbar to present
+        "fadeOutDown",
         "fadeOutDownBig",
-        // "fadeOutLeft", // no negative effects
+        "fadeOutLeft",
         "fadeOutLeftBig",
         "fadeOutRight",
         "fadeOutRightBig",
         "fadeOutUp",
-        // "fadeOutUpBig",  // no negative effects
+        "fadeOutUpBig",
         "fadeOutTopLeft",
         "fadeOutTopRight",
         "fadeOutBottomRight",
-        // "fadeOutBottomLeft", // causes vertical scrollbar to present
+        "fadeOutBottomLeft",
         "rotateOut",
         "rotateOutDownLeft",
         "rotateOutDownRight",
         "rotateOutUpLeft",
         "rotateOutUpRight",
-        // "zoomOut", // no negative effects
+        "zoomOut",
         "zoomOutDown",
         "zoomOutLeft",
-        // "zoomOutRight", stretches screen horizontally
+        "zoomOutRight",
         "zoomOutUp",
         "slideOutDown",
-        //"slideOutLeft",  // no negative effects
-        //"slideOutRight",  // no negative effects
+        "slideOutLeft",
+        "slideOutRight",
         "slideOutUp"
     ],
     attentionGetters: [
@@ -318,6 +318,7 @@ const gameSounds = {
 };
 
 // Exporting data by attaching to the window object to avoid namespace clutter
+// Do this as modules in future when allowed to use Webpack or similar
 window.gameData = {
     phrases: gamePhrases,
     sounds: gameSounds,
