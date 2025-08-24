@@ -426,9 +426,9 @@ const toggleSounds = () => {
  * Toggle the sound icon to reflect whether sound is on or off
  */
 const toggleSoundIcon = (e) => {
-    soundButton.innerHTML = soundEnabled ? 
-        `<i class="fa-solid fa-volume-high"></i>` :
-        `<i class="fa-solid fa-volume-off"></i>`;
+    soundButton.innerHTML = soundEnabled 
+        ?  `<i class="fa-solid fa-volume-high"></i>` 
+        : `<i class="fa-solid fa-volume-off"></i>`;
 }
 
 /**
@@ -454,9 +454,9 @@ const getRandomNumber = (lower, upper) => {
 const setHeartHues = () => {
     const newHeartHue = getRandomNumber(0, 360);
     const newHeartSaturation = `${getRandomNumber(50, 250)}%`;
-    overlay.style.display == "none" ? 
-    hearts.forEach((heart) => heart.style.filter = `hue-rotate(${newHeartHue}deg) saturate(${newHeartSaturation})`) :
-    hearts.forEach((heart) => heart.style.removeProperty("filter"));
+    overlay.style.display == "none" 
+    ? hearts.forEach((heart) => heart.style.filter = `hue-rotate(${newHeartHue}deg) saturate(${newHeartSaturation})`) 
+    : hearts.forEach((heart) => heart.style.removeProperty("filter"));
 }
 
 /**
