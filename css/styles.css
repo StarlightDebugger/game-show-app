@@ -182,6 +182,7 @@ button {
 
 #overlay-message {
   font-size: 2em;
+  text-transform: capitalize;
 }
 
 .happy-font {
